@@ -1,21 +1,25 @@
+﻿using eTicketApp.Data;
 using eTicketApp.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace eTicketApp.Controllers
 {
-    public class HomeController : Controller
+    public class MoviesController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly AppDbContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public MoviesController(AppDbContext context)
         {
-            _logger = logger;
+            _context = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var movies = await _context.Movies.Include(m => m.Cinema)
+                .OrderBy(m => m.Name).ToListAsync();
+            return View(movies);
         }
 
         public IActionResult Privacy()
