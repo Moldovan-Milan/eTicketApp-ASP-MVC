@@ -1,10 +1,11 @@
-﻿using eTicketApp.Data.Enums;
+﻿using eTicketApp.Data.Base;
+using eTicketApp.Data.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace eTicketApp.Models
 {
-    public class Movie
+    public class Movie : IEntityBase
     {
         [Key]
         public int Id { get; set; }
@@ -18,17 +19,17 @@ namespace eTicketApp.Models
         public MovieCategory MovieCategory { get; set; }
 
         // Relationships
-        public List<Actor_Movie> Actors_Movies { get; set; }
+        public List<Actor_Movie>? Actors_Movies { get; set; }
         
         // Cinema
         public int CinemaId { get; set; }
         [ForeignKey("CinemaId")]
-        public Cinema Cinema { get; set; }
+        public Cinema? Cinema { get; set; }
 
         // Producer
         public int ProducerId { get; set; }
         [ForeignKey("ProducerId")]
-        public Producer Producer { get; set; }
+        public Producer? Producer { get; set; }
 
     }
 }

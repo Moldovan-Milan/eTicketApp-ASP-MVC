@@ -17,7 +17,7 @@ namespace eTicketApp.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var actors = await _service.GetAll();
+            var actors = await _service.GetAllAsync();
             return View(actors);
         }
 

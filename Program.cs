@@ -13,7 +13,10 @@ namespace eTicketApp
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddDbContext<AppDbContext>();
+
             builder.Services.AddScoped<IActorsService, ActorsService>();
+            builder.Services.AddScoped<IProducerService, ProducerService>();
+            builder.Services.AddScoped<IMoviesService, MoviesService>();
 
             var app = builder.Build();
 

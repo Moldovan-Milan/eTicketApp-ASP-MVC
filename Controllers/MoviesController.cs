@@ -1,4 +1,5 @@
 ﻿using eTicketApp.Data;
+using eTicketApp.Data.Services;
 using eTicketApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -8,17 +9,18 @@ namespace eTicketApp.Controllers
 {
     public class MoviesController : Controller
     {
-        private readonly AppDbContext _context;
+        private readonly IMoviesService _service;
 
-        public MoviesController(AppDbContext context)
+        public MoviesController(IMoviesService service)
         {
-            _context = context;
+            _service = service;
         }
 
         public async Task<IActionResult> Index()
         {
-            var movies = await _context.Movies.Include(m => m.Cinema)
-                .OrderBy(m => m.Name).ToListAsync();
+            var movies = await _service.GetAllOrderbyAsync();
+            if (movies == null) 
+                return View("NotFound");
             return View(movies);
         }
 
@@ -31,6 +33,19 @@ namespace eTicketApp.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        // Get: Filter/searchString
+        public async Task<IActionResult> Filter(string searchString)
+        {
+            // Ha üres, visszatér az index
+            if (string.IsNullOrEmpty(searchString))
+                return RedirectToAction("Index");
+
+            var filteredMovies = await _service.SearchByNameAsync(searchString);
+            if (filteredMovies == null)
+                return View("NotFound");
+            return View("Index", filteredMovies);
         }
     }
 }

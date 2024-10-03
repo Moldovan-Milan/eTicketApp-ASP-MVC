@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using eTicketApp.Data.Base;
+using System.ComponentModel.DataAnnotations;
 
 namespace eTicketApp.Models
 {
-    public class Actor
+    public class Actor : IEntityBase
     {
         [Key]
         public int Id { get; set; }
