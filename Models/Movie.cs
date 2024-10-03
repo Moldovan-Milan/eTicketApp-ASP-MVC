@@ -1,4 +1,4 @@
-﻿using eTicketApp.Data;
+﻿using eTicketApp.Data.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 

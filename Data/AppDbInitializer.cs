@@ -1,4 +1,5 @@
-﻿using eTicketApp.Models;
+﻿using eTicketApp.Data.Enums;
+using eTicketApp.Models;
 
 namespace eTicketApp.Data
 {

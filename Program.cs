@@ -1,4 +1,6 @@
 using eTicketApp.Data;
+using eTicketApp.Data.Services;
+using Microsoft.Extensions.FileProviders;
 
 namespace eTicketApp
 {
@@ -11,6 +13,7 @@ namespace eTicketApp
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddDbContext<AppDbContext>();
+            builder.Services.AddScoped<IActorsService, ActorsService>();
 
             var app = builder.Build();
 
@@ -24,6 +27,12 @@ namespace eTicketApp
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            //app.UseStaticFiles(new StaticFileOptions
+            //{
+            //    FileProvider = new PhysicalFileProvider(
+            //        Path.Combine(Directory.GetCurrentDirectory(), "images")),
+            //    RequestPath = "/images"
+            //});
 
             app.UseRouting();
 
